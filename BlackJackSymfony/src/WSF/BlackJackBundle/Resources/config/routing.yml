@@ -1,0 +1,3 @@
+wsf_black_jack_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: WSFBlackJackBundle:Default:index }

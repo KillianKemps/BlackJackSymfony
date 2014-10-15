@@ -1,0 +1,4 @@
+services:
+#    wsf_black_jack.example:
+#        class: WSF\BlackJackBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
