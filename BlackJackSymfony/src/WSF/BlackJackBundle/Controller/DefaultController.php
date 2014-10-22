@@ -33,7 +33,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($player);
             $em->flush();
-            return new Response('Created $player name '.$player->getName());
+            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet'));
         }
 
         return array('form' => $form->createView());
