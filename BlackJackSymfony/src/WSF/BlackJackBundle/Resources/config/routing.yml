@@ -1,3 +1,7 @@
 wsf_black_jack_homepage:
-    path:     /hello/{name}
+    path:     /
     defaults: { _controller: WSFBlackJackBundle:Default:index }
+
+wsf_black_jack_homepage_create:
+    path:   /create/{name}
+    defaults: { _controller: WSFBlackJackBundle:Default:createPlayer }
