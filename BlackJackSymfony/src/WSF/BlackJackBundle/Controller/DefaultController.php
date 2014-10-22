@@ -36,6 +36,15 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet'));
         }
 
-        return array('form' => $form->createView());
+        $repository = $this->getDoctrine()
+    ->getRepository('WSFBlackJackBundle:Player');
+
+        $bestplayers = $repository->findBy(
+            array(),
+            array('wallet' => 'DESC'),
+            5
+        );  
+
+        return array('form' => $form->createView(), 'bestplayers' => $bestplayers);
     }
 }
