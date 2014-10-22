@@ -3,12 +3,18 @@
 namespace WSF\BlackJackBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use WSF\BlackJackBundle\Entity\Player;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/")
+     * @Template("WSFBlackJackBundle:Default:index.html.twig")
+     */
     public function indexAction(Request $request)
     {
         $player = new Player();
@@ -30,8 +36,6 @@ class DefaultController extends Controller
             return new Response('Created $player name '.$player->getName());
         }
 
-        return $this->render('WSFBlackJackBundle:Default:index.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return array('form' => $form->createView());
     }
 }

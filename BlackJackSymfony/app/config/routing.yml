@@ -1,4 +1,4 @@
 wsf_black_jack:
-    resource: "@WSFBlackJackBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@WSFBlackJackBundle/Controller"
+    type: annotation
 
