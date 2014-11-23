@@ -73,7 +73,7 @@ class PrepareGameController extends Controller
 
             $roundId = $round->getId();
             // return new Response('Created round bet '.$round->getBet());
-            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_play', array('roundId' => $roundId, 'playerValue' => '0')));
+            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_play', array('roundId' => $roundId)));
 
         }
 
@@ -87,38 +87,38 @@ class PrepareGameController extends Controller
     public function bankAction($roundId, $status)
     {
 
+        $roundRepository = $this->getDoctrine()
+            ->getRepository('WSFBlackJackBundle:Round');
+        $round = $roundRepository->find($roundId);
+        $roundBet = $round->getBet();
+
+        $game = $round->getGame();
+        $gameId = $game->getId();
+
+        $player = $game->getPlayer();
+        $playerId = $player->getId();
+
         $playerRepository = $this->getDoctrine()
             ->getRepository('WSFBlackJackBundle:Player');
         $player = $playerRepository->find($playerId);
-        $playerWallet = $player->getWallet();
 
-        $round = new Round();
-        $round->setBet('100');
-        $repository = $this->getDoctrine()
-            ->getRepository('WSFBlackJackBundle:Game');
-        $games = $repository->find($gamesId);
-
-        $round->setGame($games);
-
-        $form = $this->createFormBuilder($round)
-            ->add('bet', 'integer')
-            ->add('save', 'submit', array('label' => 'Play'))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($round);
-            $em->flush();
-
-            $roundId = $round->getId();
-            // return new Response('Created round bet '.$round->getBet());
-            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_play', array('roundId' => $roundId, 'playerValue' => '0')));
+        if($status == "lose"){
+            $player->manageWallet(-$roundBet);
+        }
+        else if($status == "won"){
+            $player->manageWallet($roundBet);
+        }
+        elseif ($status == "double"){
+            $player->manageWallet($roundBet * 2);
+        }
+        else{
 
         }
 
-        return array('form' => $form->createView(), 'playerWallet' => $playerWallet);  
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($player);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bet', array('gameId' => $gameId, 'playerId' => $playerId)));
     }
 }

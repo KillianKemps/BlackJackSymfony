@@ -104,6 +104,17 @@ class Player
     }
 
     /**
+     * Add or remove from wallet
+     *
+     * @return integer 
+     */
+    public function manageWallet($value)
+    {
+        $this->wallet += $value;
+        return $this->wallet;
+    }
+
+    /**
      * Add games
      *
      * @param \WSF\BlackJackBundle\Entity\Game $game

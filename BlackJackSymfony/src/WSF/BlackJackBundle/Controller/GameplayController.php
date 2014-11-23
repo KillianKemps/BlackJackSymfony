@@ -14,49 +14,29 @@ use WSF\BlackJackBundle\Entity\RevealedCard;
 class GameplayController extends Controller
 {
     /**
-     * @Route("/play/{roundId}/{playerValue}/{bankValue}", defaults={"bankValue" = 0})
+     * @Route("/play/{roundId}/{playerValue}/{bankValue}", defaults={"bankValue" = 0, "playerValue" = 0})
      * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
      */
     public function playAction($roundId, $playerValue, $bankValue)
     {
-        // function takeCard(){
-        //     $cardsArray = array(
-        //         '01A', '02A', '03A', '04A', '05A', '06A', '07A', '08A', '09A', '10A1', '10A2', '10A3', '10A4',
-        //         '01B', '02B', '03B', '04B', '05B', '06B', '07B', '08B', '09B', '10B1', '10B2', '10B3', '10B4',
-        //         '01C', '02C', '03C', '04C', '05C', '06C', '07C', '08C', '09C', '10C1', '10C2', '10C3', '10C4',
-        //         '01D', '02D', '03D', '04D', '05D', '06D', '07D', '08D', '09D', '10D1', '10D2', '10D3', '10D4'
-        //     );
-
-        //     $randomCard = $cardsArray[array_rand($cardsArray, 1)];
-
-        //     return $randomCard;
-        // }
-
-        // function checkIfCardAlreadyExists($revealedCards, $randomCard){
-        //     $totalRevealedCardsValue = 0;
-        //     for ($i=0; $i < sizeof($revealedCards); $i++) {
-        //         if($revealedCards[$i]['name'] == $randomCard){
-        //             echo "card already exist";
-        //             $randomCard = takeCard();
-        //             checkIfCardAlreadyExists($revealedCards, $randomCard); 
-        //         } 
-        //         $totalRevealedCardsValue += substr($revealedCards[$i]['name'], 0, -1); 
-        //     }    
-        //     return $totalRevealedCardsValue;
-        // }
-
         if($playerValue > 21){
             $message = "You lose. ";
+            return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
         }
         else{
             if($bankValue > 21 && $bankValue != 0){
                 $message = "You won your bet. Bank had " . $bankValue;
+                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "won")));
+
             }
             else if($playerValue > $bankValue && $bankValue != 0){
                 $message = "You won double your bet. Bank had " . $bankValue;
+                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "double")));
+
             }
             else if($playerValue < $bankValue && $bankValue != 0){
                 $message = "You lose your bet. Bank had " . $bankValue;
+                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
             }
             else{
                 $message = "You still can win.";
