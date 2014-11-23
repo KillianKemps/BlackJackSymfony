@@ -104,9 +104,11 @@ class PrepareGameController extends Controller
 
         if($status == "lose"){
             $player->manageWallet(-$roundBet);
+            $game->setScore(-$roundBet);
         }
         else if($status == "won"){
             $player->manageWallet($roundBet);
+            $game->setScore($roundBet);
         }
         else{
 
@@ -114,6 +116,7 @@ class PrepareGameController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($player);
+        $em->persist($game);
         $em->flush();
 
         return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bet', array('gameId' => $gameId, 'playerId' => $playerId)));
