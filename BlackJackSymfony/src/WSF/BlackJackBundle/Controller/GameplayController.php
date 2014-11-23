@@ -15,99 +15,13 @@ use WSF\BlackJackBundle\Entity\Round;
 
 class GameplayController extends Controller
 {
-     /**
-     * @Route("/game/{playerId}")
-     * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
-     */
-    public function gameAction($playerId)
-    {
-
-        $games = new Games();
-        $games->setScore('0');
-        $repository = $this->getDoctrine()
-            ->getRepository('WSFBlackJackBundle:Player');
-        $player = $repository->find($playerId);
-        $games->setPlayer($player);
-        var_dump($playerId);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($games);
-        $em->flush();
-
-        $gamesId = $games->getId();
-
-        return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet', array('gamesId' => $gamesId, 'playerId' => $playerId)));
-    }
-
-    /**
-     * @Route("/bet/{playerId}/{gamesId}")
-     * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
-     */
-    public function betAction(Request $request, $playerId, $gamesId)
-    {
-
-        $playerRepository = $this->getDoctrine()
-            ->getRepository('WSFBlackJackBundle:Player');
-        $player = $playerRepository->find($playerId);
-        $playerWallet = $player->getWallet();
-
-        $round = new Round();
-        $round->setBet('100');
-        $repository = $this->getDoctrine()
-            ->getRepository('WSFBlackJackBundle:Games');
-        $games = $repository->find($gamesId);
-
-        $round->setGames($games);
-
-        $form = $this->createFormBuilder($round)
-            ->add('bet', 'integer')
-            ->add('save', 'submit', array('label' => 'Play'))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($round);
-            $em->flush();
-            return new Response('Created round bet '.$round->getBet());
-        }
-
-        return array('form' => $form->createView(), 'playerWallet' => $playerWallet);  
-    }
-
     /**
      * @Route("/play")
      * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
      */
     public function playAction()
     {
-        return array(
-                // ...
-            );    
-    }
-
-    /**
-     * @Route("/createGame")
-     * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
-     */
-    public function createGameAction()
-    {
-        return array(
-                // ...
-            );    
-    }
-
-    /**
-     * @Route("/createRound")
-     * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
-     */
-    public function createRoundAction()
-    {
-        return array(
-                // ...
-            );    
+        return array();  
     }
 
 }

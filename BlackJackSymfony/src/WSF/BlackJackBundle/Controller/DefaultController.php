@@ -41,7 +41,7 @@ class DefaultController extends Controller
             // $response = new Response('Content', 200, array('content-type' => 'text/html'));
             // $response->headers->setCookie(new Cookie('playerId', $playerId));
 
-            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_game', array('playerId' => $playerId)));
+            return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_game', array('playerId' => $playerId)));
         }
 
         $repository = $this->getDoctrine()
