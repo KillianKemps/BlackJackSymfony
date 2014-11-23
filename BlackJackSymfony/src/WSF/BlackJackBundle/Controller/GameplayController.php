@@ -19,31 +19,38 @@ class GameplayController extends Controller
      */
     public function playAction($roundId, $playerValue, $bankValue)
     {
+        $canPlay = false;
         if($playerValue > 21){
             $message = "You lose. ";
-            return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
+            $status = "lose";
+            // return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
         }
         else{
             if($bankValue > 21 && $bankValue != 0){
                 $message = "You won your bet. Bank had " . $bankValue;
-                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "won")));
+                $status = "won";
+                // return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "won")));
 
             }
             else if($playerValue > $bankValue && $bankValue != 0){
                 $message = "You won double your bet. Bank had " . $bankValue;
-                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "double")));
+                $status = "double";
+                // return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "double")));
 
             }
             else if($playerValue < $bankValue && $bankValue != 0){
                 $message = "You lose your bet. Bank had " . $bankValue;
-                return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
+                $status = "lose";
+                // return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "lose")));
             }
             else{
+                $canPlay = true;
                 $message = "You still can win.";
+                $status = "none";
             }    
         }
 
-        return array('message' => $message, 'playerValue' => $playerValue, 'roundId' => $roundId);  
+        return array('message' => $message, 'playerValue' => $playerValue, 'roundId' => $roundId, 'canPlay' => $canPlay, 'status' => $status);  
     }
 
     /**

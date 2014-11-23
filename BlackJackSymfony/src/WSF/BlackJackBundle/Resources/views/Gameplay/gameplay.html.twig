@@ -9,8 +9,10 @@
 <p>You now have a total of {{ playerValue }}</p>
 
 <h3>{{ message }}</h3>
-
-<a href="/playPlayer/{{ roundId }}/{{ playerValue }}">Take a card</a>
-<a href="/playBank/{{ roundId }}/{{ playerValue }}">Stop</a>
-
+{% if canPlay %}
+	<a href="/playPlayer/{{ roundId }}/{{ playerValue }}">Take a card</a>
+	<a href="/playBank/{{ roundId }}/{{ playerValue }}">Stop</a>
+{% else %}
+	<a href="/bank/{{ roundId }}/{{ status }}">Continue</a>
+{% endif %}
 {% endblock %}
