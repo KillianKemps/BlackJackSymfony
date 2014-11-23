@@ -36,34 +36,20 @@ class GameplayController extends Controller
 
         $gamesId = $games->getId();
 
-        // $response = $this->forward('WSFBlackJackBundle:Gameplay:bet', array(
-        //     'games'  => $games,
-        // ));
-
-        // // ... modifiez encore la réponse ou bien retournez-la directement
-
-        // return $response;
-
-        return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet', array('gamesId' => $gamesId)));
+        return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet', array('gamesId' => $gamesId, 'playerId' => $playerId)));
     }
 
     /**
-     * @Route("/bet/{gamesId}")
+     * @Route("/bet/{playerId}/{gamesId}")
      * @Template("WSFBlackJackBundle:Gameplay:gameplay.html.twig")
      */
-    public function betAction(Request $request, $gamesId)
+    public function betAction(Request $request, $playerId, $gamesId)
     {
-        // $response = new Response('Content', 200, array('content-type' => 'text/html'));
-        // $request = $this->getRequest();
-        // $cookies = $request->cookies->all();    
-        // // $request = $this->getRequest($_COOKIE);
-        // $playerId = $request->headers->getCookies();
-        // $playerId = $response->headers->getCookies();
-        // var_dump($cookies);
-    //     $repository = $this->getDoctrine()
-    // ->getRepository('WSFBlackJackBundle:Player');
-    //     $player = $repository->find($playerId);
-    //     $playerWallet = $player->getWallet();
+
+        $playerRepository = $this->getDoctrine()
+            ->getRepository('WSFBlackJackBundle:Player');
+        $player = $playerRepository->find($playerId);
+        $playerWallet = $player->getWallet();
 
         $round = new Round();
         $round->setBet('100');
@@ -88,7 +74,7 @@ class GameplayController extends Controller
             return new Response('Created round bet '.$round->getBet());
         }
 
-        return array('form' => $form->createView());  
+        return array('form' => $form->createView(), 'playerWallet' => $playerWallet);  
     }
 
     /**
