@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Player
 {
     /**
-     * @ORM\OneToMany(targetEntity="Games", mappedBy="Rounds")
+     * @ORM\OneToMany(targetEntity="Game", mappedBy="player")
      */
     protected $games;
 
@@ -106,12 +106,12 @@ class Player
     /**
      * Add games
      *
-     * @param \WSF\BlackJackBundle\Entity\Games $games
+     * @param \WSF\BlackJackBundle\Entity\Game $game
      * @return Player
      */
-    public function addGame(\WSF\BlackJackBundle\Entity\Games $games)
+    public function addGame(\WSF\BlackJackBundle\Entity\Game $game)
     {
-        $this->games[] = $games;
+        $this->games[] = $game;
 
         return $this;
     }
@@ -119,11 +119,11 @@ class Player
     /**
      * Remove games
      *
-     * @param \WSF\BlackJackBundle\Entity\Games $games
+     * @param \WSF\BlackJackBundle\Entity\Game $game
      */
-    public function removeGame(\WSF\BlackJackBundle\Entity\Games $games)
+    public function removeGame(\WSF\BlackJackBundle\Entity\Game $game)
     {
-        $this->games->removeElement($games);
+        $this->games->removeElement($game);
     }
 
     /**

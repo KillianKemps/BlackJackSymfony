@@ -4,6 +4,12 @@
 
 {% block body %}
 <h1>Welcome to the Gameplay page</h1>
+
+<p>You took a card with a value of {{ cardValue }}</p>
+<p>You now have a total of {{ totalCardsValue }}</p>
+
+<h3>{{ message }}</h3>
+
 <button>Take a card</button>
 <button>Stop</button>
 {% endblock %}

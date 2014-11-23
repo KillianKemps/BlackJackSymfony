@@ -32,21 +32,63 @@ class GameplayController extends Controller
             return $randomCard;
         }
 
+
+        function checkIfCardAlreadyExists($revealedCards, $randomCard){
+            $totalRevealedCardsValue = 0;
+            for ($i=0; $i < sizeof($revealedCards); $i++) {
+                if($revealedCards[$i]['name'] == $randomCard){
+                    echo "card already exist";
+                    $randomCard = takeCard();
+                    checkIfCardAlreadyExists($revealedCards, $randomCard); 
+                } 
+                $totalRevealedCardsValue += substr($revealedCards[$i]['name'], 0, -1); 
+            }    
+            return $totalRevealedCardsValue;
+        }
+
         $randomCard = takeCard();        
 
-        $revealedCard = new RevealedCard();
-        $revealedCard->setName($randomCard);
-
+        // Get the cards already played
         $repository = $this->getDoctrine()
             ->getRepository('WSFBlackJackBundle:Round');
         $round = $repository->find($roundId);
-        $revealedCard->setRound($round);
 
         $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT p
+            FROM WSFBlackJackBundle:RevealedCard p
+            WHERE p.round = :roundId'
+        )->setParameter('roundId', $roundId);
+
+        $revealedCards = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        // Check if the taken card were already taken   
+        // In the same time, calculates the total value of the revealed cards     
+        $totalRevealedCardsValue = checkIfCardAlreadyExists($revealedCards, $randomCard);
+
+        // Get the value of the taken card
+        $cardValue = substr($randomCard, 0, -1); 
+
+        // Caculate the total value with the taken card
+        $totalCardsValue = $totalRevealedCardsValue + $cardValue;
+
+        if($totalCardsValue > 21){
+            $message = "You lose";
+        }
+        else{
+            $message = "You still can win";
+        }
+
+        // Save the unique card to the database
+        $revealedCard = new RevealedCard();
+        $revealedCard->setName($randomCard);
+        $revealedCard->setRound($round);
+
         $em->persist($revealedCard);
         $em->flush();
 
-        return array();  
+        return array('cardValue' => $cardValue, 'totalCardsValue' => $totalCardsValue, 'message' => $message);  
     }
+
 
 }

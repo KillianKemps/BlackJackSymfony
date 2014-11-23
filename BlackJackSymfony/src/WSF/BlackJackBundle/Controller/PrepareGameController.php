@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 
-use WSF\BlackJackBundle\Entity\Games;
+use WSF\BlackJackBundle\Entity\Game;
 use WSF\BlackJackBundle\Entity\Round;
 
 
@@ -22,7 +22,7 @@ class PrepareGameController extends Controller
     public function gameAction($playerId)
     {
 
-        $games = new Games();
+        $games = new Game();
         $games->setScore('0');
         $repository = $this->getDoctrine()
             ->getRepository('WSFBlackJackBundle:Player');
@@ -53,10 +53,10 @@ class PrepareGameController extends Controller
         $round = new Round();
         $round->setBet('100');
         $repository = $this->getDoctrine()
-            ->getRepository('WSFBlackJackBundle:Games');
+            ->getRepository('WSFBlackJackBundle:Game');
         $games = $repository->find($gamesId);
 
-        $round->setGames($games);
+        $round->setGame($games);
 
         $form = $this->createFormBuilder($round)
             ->add('bet', 'integer')

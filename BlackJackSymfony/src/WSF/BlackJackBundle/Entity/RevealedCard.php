@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class RevealedCard
 {
      /**
-     * @ORM\ManyToOne(targetEntity="Round", inversedBy="revealedCards")
+     * @ORM\ManyToOne(targetEntity="WSF\BlackJackBundle\Entity\Round", inversedBy="revealedCards")
      * @ORM\JoinColumn(name="round_id", referencedColumnName="id")
      */
     protected $round;

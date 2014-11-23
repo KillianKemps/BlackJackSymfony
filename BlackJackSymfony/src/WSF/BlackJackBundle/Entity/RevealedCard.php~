@@ -67,4 +67,27 @@ class RevealedCard
     {
         return $this->name;
     }
+
+    /**
+     * Set round
+     *
+     * @param \WSF\BlackJackBundle\Entity\Round $round
+     * @return RevealedCard
+     */
+    public function setRound(\WSF\BlackJackBundle\Entity\Round $round = null)
+    {
+        $this->round = $round;
+
+        return $this;
+    }
+
+    /**
+     * Get round
+     *
+     * @return \WSF\BlackJackBundle\Entity\Round 
+     */
+    public function getRound()
+    {
+        return $this->round;
+    }
 }

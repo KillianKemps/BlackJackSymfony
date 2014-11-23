@@ -9,12 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Games
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="WSF\BlackJackBundle\Entity\GamesRepository")
+ * @ORM\Entity(repositoryClass="WSF\BlackJackBundle\Entity\GameRepository")
  */
-class Games
+class Game
 {
     /**
-     * @ORM\OneToMany(targetEntity="Round", mappedBy="Games")
+     * @ORM\OneToMany(targetEntity="Round", mappedBy="game")
      */
     protected $rounds;
 

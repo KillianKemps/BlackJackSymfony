@@ -14,20 +14,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Round
 {
     /**
-     * @ORM\OneToMany(targetEntity="RevealedCard", mappedBy="Round")
+     * @ORM\OneToMany(targetEntity="RevealedCard", mappedBy="round")
      */
     protected $revealedCards;
-
-    public function __construct()
-    {
-        $this->revealedCards = new ArrayCollection();
-    }
-
      /**
-     * @ORM\ManyToOne(targetEntity="Games", inversedBy="rounds")
-     * @ORM\JoinColumn(name="games_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="rounds")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
-    protected $games;
+    protected $game;
 
     /**
      * @var integer
@@ -44,6 +38,12 @@ class Round
      * @ORM\Column(name="bet", type="bigint")
      */
     private $bet;
+
+
+    public function __construct()
+    {
+        $this->revealedCards = new ArrayCollection();
+    }
 
 
     /**
@@ -82,10 +82,10 @@ class Round
     /**
      * Set games
      *
-     * @param \WSF\BlackJackBundle\Entity\Games $games
+     * @param \WSF\BlackJackBundle\Entity\Game $games
      * @return Round
      */
-    public function setGames(\WSF\BlackJackBundle\Entity\Games $games = null)
+    public function setGame(\WSF\BlackJackBundle\Entity\Game $games = null)
     {
         $this->games = $games;
 
@@ -95,9 +95,9 @@ class Round
     /**
      * Get games
      *
-     * @return \WSF\BlackJackBundle\Entity\Games 
+     * @return \WSF\BlackJackBundle\Entity\Game
      */
-    public function getGames()
+    public function getGame()
     {
         return $this->games;
     }
@@ -133,5 +133,15 @@ class Round
     public function getRevealedCards()
     {
         return $this->revealedCards;
+    }
+
+    public function is_card_revealed($name)
+    {
+        foreach ($this->revealedCards as $key => $value) {
+            if($value == $name) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -37,7 +37,7 @@ class DefaultController extends Controller
             $em->flush();
 
             $playerId = $player->getId();
-            var_dump($playerId);
+            //var_dump($playerId);
             // $response = new Response('Content', 200, array('content-type' => 'text/html'));
             // $response->headers->setCookie(new Cookie('playerId', $playerId));
 
