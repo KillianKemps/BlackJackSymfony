@@ -3,6 +3,7 @@
 namespace WSF\BlackJackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Round
@@ -12,6 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Round
 {
+    /**
+     * @ORM\OneToMany(targetEntity="RevealedCard", mappedBy="Round")
+     */
+    protected $revealedCards;
+
+    public function __construct()
+    {
+        $this->revealedCards = new ArrayCollection();
+    }
+
      /**
      * @ORM\ManyToOne(targetEntity="Games", inversedBy="rounds")
      * @ORM\JoinColumn(name="games_id", referencedColumnName="id")
@@ -89,5 +100,38 @@ class Round
     public function getGames()
     {
         return $this->games;
+    }
+
+    /**
+     * Add revealedCards
+     *
+     * @param \WSF\BlackJackBundle\Entity\RevealedCard $revealedCards
+     * @return Round
+     */
+    public function addRevealedCard(\WSF\BlackJackBundle\Entity\RevealedCard $revealedCards)
+    {
+        $this->revealedCards[] = $revealedCards;
+
+        return $this;
+    }
+
+    /**
+     * Remove revealedCards
+     *
+     * @param \WSF\BlackJackBundle\Entity\RevealedCard $revealedCards
+     */
+    public function removeRevealedCard(\WSF\BlackJackBundle\Entity\RevealedCard $revealedCards)
+    {
+        $this->revealedCards->removeElement($revealedCards);
+    }
+
+    /**
+     * Get revealedCards
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRevealedCards()
+    {
+        return $this->revealedCards;
     }
 }

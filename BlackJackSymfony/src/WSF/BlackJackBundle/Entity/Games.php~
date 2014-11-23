@@ -3,6 +3,7 @@
 namespace WSF\BlackJackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Games
@@ -109,5 +110,28 @@ class Games
     public function getRounds()
     {
         return $this->rounds;
+    }
+
+    /**
+     * Set player
+     *
+     * @param \WSF\BlackJackBundle\Entity\Player $player
+     * @return Games
+     */
+    public function setPlayer(\WSF\BlackJackBundle\Entity\Player $player = null)
+    {
+        $this->player = $player;
+
+        return $this;
+    }
+
+    /**
+     * Get player
+     *
+     * @return \WSF\BlackJackBundle\Entity\Player 
+     */
+    public function getPlayer()
+    {
+        return $this->player;
     }
 }

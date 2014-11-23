@@ -70,45 +70,13 @@ class PrepareGameController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($round);
             $em->flush();
+
+            $roundId = $round->getId();
             // return new Response('Created round bet '.$round->getBet());
-            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_play'));
+            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_play', array('roundId' => $roundId)));
 
         }
 
         return array('form' => $form->createView(), 'playerWallet' => $playerWallet);  
     }
-
-    /**
-     * @Route("/play")
-     * @Template("WSFBlackJackBundle:PrepareGame:prepareGame.html.twig")
-     */
-    public function playAction()
-    {
-        return array(
-                // ...
-            );    
-    }
-
-    /**
-     * @Route("/createGame")
-     * @Template("WSFBlackJackBundle:PrepareGame:prepareGame.html.twig")
-     */
-    public function createGameAction()
-    {
-        return array(
-                // ...
-            );    
-    }
-
-    /**
-     * @Route("/createRound")
-     * @Template("WSFBlackJackBundle:PrepareGame:preparegame.html.twig")
-     */
-    public function createRoundAction()
-    {
-        return array(
-                // ...
-            );    
-    }
-
 }
