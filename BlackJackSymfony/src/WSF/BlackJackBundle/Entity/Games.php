@@ -3,6 +3,7 @@
 namespace WSF\BlackJackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Games
@@ -12,6 +13,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Games
 {
+    /**
+     * @ORM\OneToMany(targetEntity="Round", mappedBy="Games")
+     */
+    protected $rounds;
+
+    public function __construct()
+    {
+        $this->rounds = new ArrayCollection();
+    }
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Player", inversedBy="games")
+     * @ORM\JoinColumn(name="player_id", referencedColumnName="id")
+     */
+    protected $player;
+
     /**
      * @var integer
      *
@@ -60,5 +77,61 @@ class Games
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * Add rounds
+     *
+     * @param \WSF\BlackJackBundle\Entity\Round $rounds
+     * @return Games
+     */
+    public function addRound(\WSF\BlackJackBundle\Entity\Round $rounds)
+    {
+        $this->rounds[] = $rounds;
+
+        return $this;
+    }
+
+    /**
+     * Remove rounds
+     *
+     * @param \WSF\BlackJackBundle\Entity\Round $rounds
+     */
+    public function removeRound(\WSF\BlackJackBundle\Entity\Round $rounds)
+    {
+        $this->rounds->removeElement($rounds);
+    }
+
+    /**
+     * Get rounds
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRounds()
+    {
+        return $this->rounds;
+    }
+
+    /**
+     * Set player
+     *
+     * @param \WSF\BlackJackBundle\Entity\Player $player
+     * @return Games
+     */
+    public function setPlayer(\WSF\BlackJackBundle\Entity\Player $player = null)
+    {
+        $this->player = $player;
+
+        return $this;
+    }
+
+    /**
+     * Get player
+     *
+     * @return \WSF\BlackJackBundle\Entity\Player 
+     */
+    public function getPlayer()
+    {
+        return $this->player;
     }
 }

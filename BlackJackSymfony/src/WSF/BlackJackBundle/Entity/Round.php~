@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Round
 {
+     /**
+     * @ORM\ManyToOne(targetEntity="Games", inversedBy="rounds")
+     * @ORM\JoinColumn(name="games_id", referencedColumnName="id")
+     */
+    protected $games;
+
     /**
      * @var integer
      *
@@ -60,5 +66,28 @@ class Round
     public function getBet()
     {
         return $this->bet;
+    }
+
+    /**
+     * Set games
+     *
+     * @param \WSF\BlackJackBundle\Entity\Games $games
+     * @return Round
+     */
+    public function setGames(\WSF\BlackJackBundle\Entity\Games $games = null)
+    {
+        $this->games = $games;
+
+        return $this;
+    }
+
+    /**
+     * Get games
+     *
+     * @return \WSF\BlackJackBundle\Entity\Games 
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 }

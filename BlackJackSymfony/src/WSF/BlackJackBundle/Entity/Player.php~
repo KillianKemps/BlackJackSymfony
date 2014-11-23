@@ -13,6 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Player
 {
     /**
+     * @ORM\OneToMany(targetEntity="Games", mappedBy="Rounds")
+     */
+    protected $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")

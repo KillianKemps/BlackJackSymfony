@@ -3,6 +3,7 @@
 namespace WSF\BlackJackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Player
@@ -12,6 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Player
 {
+    /**
+     * @ORM\OneToMany(targetEntity="Games", mappedBy="Rounds")
+     */
+    protected $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
     /**
      * @var integer
      *
@@ -90,5 +101,38 @@ class Player
     public function getWallet()
     {
         return $this->wallet;
+    }
+
+    /**
+     * Add games
+     *
+     * @param \WSF\BlackJackBundle\Entity\Games $games
+     * @return Player
+     */
+    public function addGame(\WSF\BlackJackBundle\Entity\Games $games)
+    {
+        $this->games[] = $games;
+
+        return $this;
+    }
+
+    /**
+     * Remove games
+     *
+     * @param \WSF\BlackJackBundle\Entity\Games $games
+     */
+    public function removeGame(\WSF\BlackJackBundle\Entity\Games $games)
+    {
+        $this->games->removeElement($games);
+    }
+
+    /**
+     * Get games
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 }

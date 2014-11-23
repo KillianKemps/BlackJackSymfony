@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Cookie;
+
 use WSF\BlackJackBundle\Entity\Player;
 
 class DefaultController extends Controller
@@ -33,12 +35,19 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($player);
             $em->flush();
-            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_bet'));
+
+            $playerId = $player->getId();
+            var_dump($playerId);
+            // $response = new Response('Content', 200, array('content-type' => 'text/html'));
+            // $response->headers->setCookie(new Cookie('playerId', $playerId));
+
+            return $this->redirect($this->generateUrl('wsf_blackjack_gameplay_game', array('playerId' => $playerId)));
         }
 
         $repository = $this->getDoctrine()
     ->getRepository('WSFBlackJackBundle:Player');
 
+        // Get five players with the biggest wallet
         $bestplayers = $repository->findBy(
             array(),
             array('wallet' => 'DESC'),
