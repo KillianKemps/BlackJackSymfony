@@ -1,3 +1,8 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}WSFBlackJackBundle:Community:ShowListPlayers{% endblock %}
+
+{% block body %}
 <h1>BlackJack</h1>
 
 Enter your name and start a new game:
@@ -13,3 +18,4 @@ Enter your name and start a new game:
     <li>{{ bestplayer.name }} : {{ bestplayer.wallet }} </li>
     {% endfor %}
 </ul>
+{% endblock %}
