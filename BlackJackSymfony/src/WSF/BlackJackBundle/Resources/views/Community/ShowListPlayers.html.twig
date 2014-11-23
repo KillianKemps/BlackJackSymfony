@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}WSFBlackJackBundle:Community:ShowListPlayers{% endblock %}
+
+{% block body %}
+<h1>Stats</h1>
+<a href="/">Home</a>
+<ul>
+   {% for player in players %} 
+    <li><a href="/ShowPlayerProfile/{{ player.id }}">{{ player.name }}</a> : {{ player.wallet }} </li>
+    {% endfor %}
+</ul>
+{% endblock %}
