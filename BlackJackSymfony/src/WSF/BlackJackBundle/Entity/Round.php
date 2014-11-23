@@ -80,26 +80,26 @@ class Round
     }
 
     /**
-     * Set games
+     * Set game
      *
-     * @param \WSF\BlackJackBundle\Entity\Game $games
+     * @param \WSF\BlackJackBundle\Entity\Game $game
      * @return Round
      */
-    public function setGame(\WSF\BlackJackBundle\Entity\Game $games = null)
+    public function setGame(\WSF\BlackJackBundle\Entity\Game $game = null)
     {
-        $this->games = $games;
+        $this->game = $game;
 
         return $this;
     }
 
     /**
-     * Get games
+     * Get game
      *
      * @return \WSF\BlackJackBundle\Entity\Game
      */
     public function getGame()
     {
-        return $this->games;
+        return $this->game;
     }
 
     /**
