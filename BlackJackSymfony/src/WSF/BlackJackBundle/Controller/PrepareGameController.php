@@ -108,9 +108,6 @@ class PrepareGameController extends Controller
         else if($status == "won"){
             $player->manageWallet($roundBet);
         }
-        elseif ($status == "double"){
-            $player->manageWallet($roundBet * 2);
-        }
         else{
 
         }

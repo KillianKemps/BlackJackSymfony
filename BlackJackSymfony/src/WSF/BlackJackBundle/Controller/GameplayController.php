@@ -33,8 +33,8 @@ class GameplayController extends Controller
 
             }
             else if($playerValue > $bankValue && $bankValue != 0){
-                $message = "You won double your bet. Bank had " . $bankValue;
-                $status = "double";
+                $message = "You won your bet. Bank had " . $bankValue;
+                $status = "won";
                 // return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bank', array('roundId' => $roundId, 'status' => "double")));
 
             }
