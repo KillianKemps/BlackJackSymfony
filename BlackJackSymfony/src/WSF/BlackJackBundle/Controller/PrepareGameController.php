@@ -119,6 +119,7 @@ class PrepareGameController extends Controller
         $em->persist($game);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_bet', array('gameId' => $gameId, 'playerId' => $playerId)));
+        return $this->redirect($this->generateUrl('wsf_blackjack_preparegame_game', array('playerId' => $playerId)));
+
     }
 }
