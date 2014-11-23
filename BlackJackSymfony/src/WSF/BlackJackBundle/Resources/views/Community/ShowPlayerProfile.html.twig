@@ -3,6 +3,13 @@
 {% block title %}WSFBlackJackBundle:Community:ShowPlayerProfile{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Community:ShowPlayerProfile page</h1>
-<h2>Player name : </h2>
+<h1>Profile page</h1>
+<a href="/">Home</a>
+<h2>Player name : {{ player.name }}</h2>
+
+<ul>
+   {% for game in games %} 
+    <li>{{ game.score }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
